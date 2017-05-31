@@ -10,9 +10,10 @@ RUN set -xe \
 
 RUN set -xe \
     && pecl channel-update pecl.php.net \
-    && pecl install xdebug mongodb \
-    && docker-php-ext-enable xdebug mongodb \
-    && apk del .build-deps
+    && pecl install -o xdebug mongodb redis \
+    && docker-php-ext-enable xdebug mongodb redis \
+    && apk del .build-deps \
+    && rm -rf /tmp/
 
 RUN echo "xdebug.remote_enable=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
     && echo "xdebug.remote_autostart=1" >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini \
